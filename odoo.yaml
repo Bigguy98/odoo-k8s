@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: odoo-app
+spec:
+  containers:
+  - name: odoo-app
+    image: hayquen/my-odoo
+    ports:
+    - containerPort: 8069
