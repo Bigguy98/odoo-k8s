@@ -5,6 +5,6 @@ metadata:
 spec:
   containers:
   - name: odoo-app
-    image: hayquen/odoo-ci:16.0-
+    image: hayquen/odoo-ci:16.0-$(date +%Y%m%d%H%M%S)
     ports:
     - containerPort: 8069
