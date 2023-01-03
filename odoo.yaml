@@ -16,7 +16,7 @@ spec:
       - name: DB_NAME
         value: postgres
       - name: DB_HOST
-        value: odoo-db.default.svc.cluster.local
+        value: odoo-db.odoo.svc.cluster.local
       - name: DB_USERNAME
         valueFrom:
           secretKeyRef:
