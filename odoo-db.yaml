@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: odoo-db
+  name: odoo-db
+spec:
+  containers:
+  - image: postgres:13
+    name: odoo-db
+    resources: {}
+    env:
+      - name: POSTGRES_DB
+        value: postgres
+      - name: PGDATA
+        value: /var/lib/postgresql/data/pgdata
+      - name: POSTGRES_USER
+        valueFrom:
+          secretKeyRef:
+            name: postgresql-account
+            key: username
+      - name: POSTGRES_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: postgresql-account
+            key: password
+    volumeMounts:
+    - name: pgdb
+      mountPath: /var/lib/postgresql/data/pgdata
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+  volumes:
+  - name: pgdb
+    hostPath:
+      path: /tmp/data
+status: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    run: odoo-db
+  name: odoo-db
+spec:
+  ports:
+  - port: 5432
+    protocol: TCP
+    targetPort: 5432
+  selector:
+    run: odoo-db
+status:
+  loadBalancer: {}
